@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import SearchBar from './SearchBar'
 import ProductTable from './ProductTable'
-import PRODUCTS from './../data/products'
 
 class FilterableProductTable extends Component {
     render() {
@@ -9,7 +8,7 @@ class FilterableProductTable extends Component {
             <div>
                 <h1>Thinking in React</h1>
                 <SearchBar />
-                <ProductTable products={PRODUCTS}/>
+                <ProductTable products={this.props.products}/>
             </div>
         )
     }

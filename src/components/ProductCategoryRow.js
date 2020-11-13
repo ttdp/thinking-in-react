@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 
 class ProductCategoryRow extends Component {
-
     render() {
+        const category = this.props.category
+
         return (
             <tr>
-                <td><b>{this.props.category}</b></td>
+                <th colSpan="2">{category}</th>
             </tr>
         )
     }

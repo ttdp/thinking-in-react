@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ProductCategoryRow from './ProductCategoryRow'
 import ProductRow from './ProductRow'
 
+/*
 function groupBy(xs, key) {
     return xs.reduce(function (rv, x) {
         (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -22,51 +23,43 @@ function groupBy2(list, keyGetter) {
     });
     return map;
 }
-
+*/
 
 class ProductTable extends Component {
-
-    constructor(props) {
-        super(props)
-
-        // this.categories2 = groupBy2(props.products, product => product.category)
-        // console.log(this.categories2.size)
-    }
-
     render() {
-        const categories = groupBy(this.props.products, 'category')
+        const products = this.props.products
         const rows = []
 
-        const keys = Object.keys(categories)
-        keys.forEach(category => {
+        let lastCategory = null
+
+        products.forEach((product) => {
+            if (product.category !== lastCategory) {
+                rows.push(
+                    <ProductCategoryRow 
+                        category={product.category}
+                        key={product.category} />
+                )
+            }
+
             rows.push(
-                <ProductCategoryRow category={category} key={category}/>
+                <ProductRow product={product} key={product.name} />
             )
 
-            let products = categories[category]
-            console.log(products)
-
-            products.forEach(product => {
-                rows.push(
-                    <ProductRow name={product.name} price={product.price} key={product.name}/>
-                )
-            })
+            lastCategory = product.category
         })
 
         return (
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </table>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
         )
     }
 }
