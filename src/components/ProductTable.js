@@ -27,12 +27,22 @@ function groupBy2(list, keyGetter) {
 
 class ProductTable extends Component {
     render() {
-        const products = this.props.products
+        const {products} = this.props
+        const {filterText} = this.props
+        const {inStockOnly} = this.props
+        
         const rows = []
-
         let lastCategory = null
 
         products.forEach((product) => {
+            if (product.name.indexOf(filterText) === -1) {
+                return
+            }
+
+            if (inStockOnly && !product.stocked) {
+                return
+            }
+
             if (product.category !== lastCategory) {
                 rows.push(
                     <ProductCategoryRow 
